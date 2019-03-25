@@ -123,6 +123,7 @@ func ConfigurationSpec(imagePath string, options *Options) *v1alpha1.Configurati
 					Image:          imagePath,
 					Resources:      options.ContainerResources,
 					ReadinessProbe: options.ReadinessProbe,
+					LivenessProbe:  options.LivenessProbe,
 					Ports:          options.ContainerPorts,
 				},
 				ContainerConcurrency: v1alpha1.RevisionContainerConcurrencyType(options.ContainerConcurrency),

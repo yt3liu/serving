@@ -36,6 +36,7 @@ type Options struct {
 	RevisionTimeoutSeconds int64
 	ContainerResources     corev1.ResourceRequirements
 	ReadinessProbe         *corev1.Probe
+	LivenessProbe          *corev1.Probe
 }
 
 // CreateConfiguration create a configuration resource in namespace with the name names.Config
