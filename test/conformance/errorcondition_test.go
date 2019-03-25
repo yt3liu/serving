@@ -136,12 +136,19 @@ func TestContainerExitingMsg(t *testing.T) {
 
 	// This probe is crucial for having a race free conformance test. It will prevent the
 	// pod from becoming ready intermittently.
-	probe := &corev1.Probe{
+	readinessProbe := &corev1.Probe{
 		Handler: corev1.Handler{
 			HTTPGet: &corev1.HTTPGetAction{},
 		},
+		PeriodSeconds: 1200,
 	}
-	if _, err := test.CreateConfiguration(t, clients, names, &test.Options{ReadinessProbe: probe}); err != nil {
+	livenessProbe := &corev1.Probe{
+		Handler: corev1.Handler{
+			HTTPGet: &corev1.HTTPGetAction{},
+		},
+		PeriodSeconds: 10,
+	}
+	if _, err := test.CreateConfiguration(t, clients, names, &test.Options{ReadinessProbe: readinessProbe, LivenessProbe: livenessProbe}); err != nil {
 		t.Fatalf("Failed to create configuration %s: %v", names.Config, err)
 	}
 	defer test.TearDown(clients, names)
